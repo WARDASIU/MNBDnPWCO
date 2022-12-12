@@ -1,15 +1,13 @@
 package mongodb.project.Mnbd.repositories;
 
-import mongodb.project.Mnbd.model.Users;
-import org.bson.types.ObjectId;
+import mongodb.project.Mnbd.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserRepository extends MongoRepository<Users, String> {
-    List<Users> findAll();
-    List<Users> findById(final ObjectId id);
+public interface UserRepository extends MongoRepository<User, String> {
+    List<User> findAll();
 
-    Users findByLoginAndPassword(String login, String password);
-    Users findByLogin(String login);
+    User findByLogin(String login);
+    User findByLoginAndPassword(String login, String password);
 }

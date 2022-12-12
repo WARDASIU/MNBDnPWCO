@@ -1,44 +1,39 @@
 package mongodb.project.Mnbd.security;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.List;
+import org.springframework.core.annotation.Order;
+//import org.springframework.security.config.annotation.SecurityBuilder;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig {
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
-
-    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 //    @Bean
-//    public AuthenticationManager authenticationManager() {
-//        return new ProviderManager(List.of(authenticationProvider()));
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+////        http
+////                .authorizeHttpRequests((authz) -> authz
+////                        .requestMatchers("/admin").hasRole("admin")
+////                )
+////                .formLogin()
+////                .loginPage("/login")
+////                .permitAll()
+////                .and()
+////                .logout()
+////                .permitAll();
+////                .defaultSuccessUrl("/admin")
+//////                .loginProcessingUrl("ABC");
+////        return http.build();
+//
+//        http
+////                .authorizeHttpRequests((authz) -> authz
+////                        .requestMatchers("/admin").hasRole("admin")
+////                )
+//                .formLogin()
+//                .defaultSuccessUrl("/admin", true);
+//        return http.build();
 //    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder);
-        return provider;
-    }
 }
