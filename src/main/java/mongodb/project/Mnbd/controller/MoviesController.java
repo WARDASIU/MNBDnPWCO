@@ -2,6 +2,7 @@ package mongodb.project.Mnbd.controller;
 
 import mongodb.project.Mnbd.model.Movies;
 import mongodb.project.Mnbd.repositories.MoviesRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,10 @@ public class MoviesController {
         mav.addObject("movies", moviesList);
 
         return mav;
+    }
+
+    @RequestMapping(value = "/movies/repo", method = RequestMethod.GET)
+    public ResponseEntity<?> getUsers() {
+        return ResponseEntity.ok().body(moviesRepository.findAll());
     }
 }

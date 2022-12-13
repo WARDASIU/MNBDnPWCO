@@ -1,8 +1,9 @@
 package mongodb.project.Mnbd.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import mongodb.project.Mnbd.model.User;
+import mongodb.project.Mnbd.repositories.UserRepository;
 import mongodb.project.Mnbd.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,22 +19,15 @@ public class LoginController {
 
     @PostMapping
     public ModelAndView login(String login, String password) {
-        log.info("Login: " + login);
-        log.info("Password: " + password);
+        UserDetails user = userService.loadUserByUsername(login);
 
-        User user = userService.checkIfUserExists(login, password);
-        if (user != null) {
-            ModelAndView successfulModel = new ModelAndView("admin");
-            successfulModel.addObject("user",user);
-
+        if (userService.verifyPassword(password, user)) {
+            ModelAndView successfulModel = new ModelAndView();
+            successfulModel.setViewName("admin");
+            successfulModel.addObject("user", user);
             return successfulModel;
-
         } else {
-            ModelAndView errorModel = new ModelAndView();
-            errorModel.setViewName("login");
-            errorModel.addObject("loginError", "Incorrect username or password");
-
-            return errorModel;
+            return getLoginPage(true);
         }
     }
 
