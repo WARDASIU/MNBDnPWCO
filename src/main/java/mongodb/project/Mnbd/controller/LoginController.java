@@ -1,7 +1,6 @@
 package mongodb.project.Mnbd.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import mongodb.project.Mnbd.repositories.UserRepository;
 import mongodb.project.Mnbd.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class LoginController {
 
         if (userService.verifyPassword(password, user)) {
             ModelAndView successfulModel = new ModelAndView();
-            successfulModel.setViewName("admin");
+            successfulModel.setViewName("redirect:/admin");
             successfulModel.addObject("user", user);
             return successfulModel;
         } else {

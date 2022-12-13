@@ -1,16 +1,26 @@
 package mongodb.project.Mnbd.controller;
 
-import mongodb.project.Mnbd.model.User;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import mongodb.project.Mnbd.repositories.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@RestController(value = "/admin")
 public class AdminController {
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView getAdminPage(@ModelAttribute("user") User user){
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView getAdminPage() {
         return new ModelAndView("admin");
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public void addClient(String name, String surname,
+                          String address, String phone) {
+
     }
 }
