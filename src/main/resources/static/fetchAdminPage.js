@@ -19,7 +19,7 @@ window.onload = function () {
                 const container = document.getElementById('data-list');
                 for (let item of data) {
                     const element = document.createElement('p');
-                    element.innerHTML = item.name;
+                    element.innerHTML = `ID: ${item.id}<br>Category: ${item.category}<br>Actors: ${item.actors.join(', ')}<br>Rating: ${item.rating}<br>Director: ${item.director}<br>Release Year: ${item.releaseYear}<br>Title: ${item.title}`;
                     container.appendChild(element);
                 }
             });
