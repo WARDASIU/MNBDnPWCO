@@ -2,8 +2,10 @@ package mongodb.project.Mnbd.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import mongodb.project.Mnbd.model.Client;
+import mongodb.project.Mnbd.model.MovieRental;
 import mongodb.project.Mnbd.model.Movies;
 import mongodb.project.Mnbd.repositories.ClientRepository;
+import mongodb.project.Mnbd.repositories.MovieRentalRepository;
 import mongodb.project.Mnbd.repositories.MoviesRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/admin")
@@ -25,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private MoviesRepository moviesRepository;
+
+    @Autowired
+    private MovieRentalRepository movieRentalRepository;
 
     @GetMapping
     public ModelAndView getAdminPage(String response, String result) {
@@ -85,12 +93,42 @@ public class AdminController {
     }
 
     @PostMapping(value = "/deleteMovie")
-    public ModelAndView deleteMovie(String movieIdToDelete) {
-        if (moviesRepository.findBy_id(Integer.parseInt(movieIdToDelete)) != null) {
-            moviesRepository.deleteBy_id(Integer.parseInt(movieIdToDelete));
+    public ModelAndView deleteMovie(int movieIdToDelete) {
+        if (moviesRepository.findBy_id(movieIdToDelete) != null) {
+            moviesRepository.deleteBy_id(movieIdToDelete);
 
             return getAdminPage("MovieDeleted", "Movie deleted!");
         }
         return getAdminPage("MovieNotFound", "Movie not found!");
+    }
+
+    @PostMapping(value = "/rentMovie")
+    public ModelAndView rentMovie(@RequestParam ObjectId clientsIdToRent, int movieToRent) {
+//        TimeZone tz = TimeZone.getTimeZone("UTC");
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+//        df.setTimeZone(tz);
+//        String nowAsISO = df.format(new Date());
+
+        // Get the current datetime
+        LocalDateTime now = LocalDateTime.now();
+
+// Add two days to the current datetime
+        LocalDateTime twoDaysLater = now.plusDays(2);
+
+// Format the datetime as an ISO string
+        DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_DATE_TIME;
+        String isoString = twoDaysLater.format(isoFormatter);
+
+        Client client = clientRepository.findBy_id(clientsIdToRent);
+        Movies movie = moviesRepository.findBy_id(movieToRent);
+        if (client != null) {
+            if (movie != null) {
+                movieRentalRepository.save(new MovieRental(client, movie.getTitle(), now.format(isoFormatter), twoDaysLater.format(isoFormatter)));
+
+                return getAdminPage("MovieRented", "Movie rented!");
+            }
+            return getAdminPage("ClientToRentNotFound", "Client not found!");
+        }
+        return getAdminPage("MovieToRentNotFound", "Movie not found!");
     }
 }
