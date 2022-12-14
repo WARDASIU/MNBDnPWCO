@@ -9,5 +9,10 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends MongoRepository<Client, String> {
     List<Client> findAll();
-    Client findByName(String name);
+    Client findByNameAndSurname(String name, String surname);
+
+    @Override
+    <S extends Client> S save(S entity);
+
+    void deleteByNameAndSurname(String name, String surname);
 }
