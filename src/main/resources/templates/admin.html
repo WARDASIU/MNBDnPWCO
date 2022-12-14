@@ -8,8 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<input type="button"  onclick="location.href='/movies'" value="Show movies">
-<input type="button"  onclick="location.href='/movies/rental'" value="Show movies rental">
+<!--<input type="button"  onclick="location.href='/movies'" value="Show movies">-->
+<!--<input type="button"  onclick="location.href='/movies/rental'" value="Show movies rental">-->
 
 <button id="data">Get movies</button>
 
@@ -78,16 +78,32 @@
 
 <div id="addMovie" class="container text-center col-lg-4" style="margin-top: 50px; border: 1px solid black;">
     <form class="form-signin text-center" th:action="@{/admin/addMovie}" method="post">
-        <h1 class="h3 mb-3 font-weight-normal">Delete Client</h1>
-        <label for="addMovie1" class="sr-only">Name</label>
-        <input type="text" name="movie1" id="addMovie1" class="form-control" placeholder="Name" required autofocus>
+        <h1 class="h3 mb-3 font-weight-normal">Add movie</h1>
 
-        <label for="addMovie2" class="sr-only">Password</label>
-        <input type="text" name="movie2" id="addMovie2" class="form-control" placeholder="Surname" required>
+        <label for="addCategory" class="sr-only">Category</label>
+        <input type="text" name="addCategory" id="addCategory" class="form-control" placeholder="Category" required autofocus>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Delete client</button>
-        <h3 th:if="${clientDeleted}" class="error">Client deleted!</h3>
-        <h3 th:if="${clientNotFound}" class="error">Client not found!</h3>
+        <label for="addRating" class="sr-only">Rating</label>
+        <input type="number" name="addRating" id="addRating" class="form-control" min="0" max="10" placeholder="Rating" required>
+
+        <label for="addDirector" class="sr-only">Director</label>
+        <input type="text" name="addDirector" id="addDirector" class="form-control" placeholder="Director" required>
+
+        <label for="addPlot" class="sr-only">Plot</label>
+        <input type="text" name=addPlot"" id="addPlot" class="form-control" placeholder="Plot" required>
+
+        <label for="addTitle" class="sr-only">Title</label>
+        <input type="text" name="addTitle" id="addTitle" class="form-control" placeholder="Title" required>
+
+        <label for="addActors" class="sr-only">Actors</label>
+        <input type="text" name="addActors" id="addActors" class="form-control" placeholder="Actor1,Actor2" required>
+
+        <label for="addYear" class="sr-only">Release Year</label>
+        <input type="number" name="addYear" id="addYear" class="form-control" placeholder="np. 2022" required>
+
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Add movie</button>
+        <h3 th:if="${movieAdded}" class="error">Movie added!</h3>
     </form>
 </div>
 

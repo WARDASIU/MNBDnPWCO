@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
+import java.util.Random;
 
-@AllArgsConstructor
 @Data
 @Document
 @Setter
@@ -23,7 +23,7 @@ public class Movies {
     public List<String> actors;
 
     @Field("ocena filmu")
-    public String rating;
+    public int rating;
 
     @Field("rezyser")
     public String director;
@@ -36,4 +36,21 @@ public class Movies {
 
     @Field("tytul")
     public String title;
+
+    public Movies(final String category,
+                  final int rating,
+                  final String director,
+                  final String plotSynopsis,
+                  final String title,
+                  final List<String> actors,
+                  final Integer releaseYear) {
+        this.id = new Random().nextInt(999999);
+        this.category = category;
+        this.actors = actors;
+        this.rating = rating;
+        this.director = director;
+        this.releaseYear = releaseYear;
+        this.plotSynopsis = plotSynopsis;
+        this.title = title;
+    }
 }

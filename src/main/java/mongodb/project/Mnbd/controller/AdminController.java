@@ -2,7 +2,9 @@ package mongodb.project.Mnbd.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import mongodb.project.Mnbd.model.Client;
+import mongodb.project.Mnbd.model.Movies;
 import mongodb.project.Mnbd.repositories.ClientRepository;
+import mongodb.project.Mnbd.repositories.MoviesRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +22,9 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private MoviesRepository moviesRepository;
 
     @GetMapping
     public ModelAndView getAdminPage(String response, String result) {
@@ -63,5 +69,18 @@ public class AdminController {
             return getAdminPage("clientCreatedOrUpdated", "");
         }
         return getAdminPage("clientNotFoundOnUpdate", "Client not found!");
+    }
+
+    @PostMapping("/addMovie")
+    public ModelAndView addMovie(String addCategory, String addRating,
+                                 String addDirector, String addPlot,
+                                 String addTitle, String addActors,
+                                 String addYear) {
+        List<String> actors = List.of(addActors.split(","));
+        moviesRepository.save(new Movies(addCategory, Integer.parseInt(addRating),
+                addDirector, addPlot, addTitle, actors, Integer.parseInt(addYear)));
+
+
+        return getAdminPage("movieAdded", "Movie added!");
     }
 }
