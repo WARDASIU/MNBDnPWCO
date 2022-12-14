@@ -1,6 +1,7 @@
 package mongodb.project.Mnbd.controller;
 
 import com.google.gson.Gson;
+import mongodb.project.Mnbd.GsonUtils;
 import mongodb.project.Mnbd.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ public class ClientController {
 
     @GetMapping(value = "/admin/clients")
     public String getProductsAsList() {
-        Gson gson = new Gson();
+        Gson gson = GsonUtils.getGson();
 
         return gson.toJson(clientRepository.findAll());
     }
