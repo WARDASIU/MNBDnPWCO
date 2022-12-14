@@ -40,7 +40,6 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout() {
-        // Logout user
         return "redirect:/login";
     }
 }

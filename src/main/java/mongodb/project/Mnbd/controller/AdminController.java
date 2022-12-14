@@ -3,14 +3,15 @@ package mongodb.project.Mnbd.controller;
 import lombok.extern.slf4j.Slf4j;
 import mongodb.project.Mnbd.model.Client;
 import mongodb.project.Mnbd.repositories.ClientRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
@@ -44,13 +45,23 @@ public class AdminController {
     public ModelAndView deleteClient(String nameToDelete, String surnameToDelete) {
         if (clientRepository.findByNameAndSurname(nameToDelete, surnameToDelete) != null) {
             clientRepository.deleteByNameAndSurname(nameToDelete, surnameToDelete);
+
             return getAdminPage("clientDeleted", "Client deleted!");
         }
         return getAdminPage("clientNotFound", "Client not found!");
     }
 
-    @GetMapping("/clients")
-    public ResponseEntity<?> getClients() {
-        return ResponseEntity.ok().body(clientRepository.findAll());
+    @PostMapping(value = "/update")
+    public ModelAndView updateClient(@RequestParam ObjectId idToUpdate, String nameToUpdate, String surnameToUpdate) {
+        log.info(String.valueOf(idToUpdate));
+        Client client = clientRepository.findBy_id(idToUpdate);
+        if (client != null) {
+            client.setName(nameToUpdate);
+            client.setSurname(surnameToUpdate);
+            clientRepository.save(client);
+
+            return getAdminPage("clientCreatedOrUpdated", "");
+        }
+        return getAdminPage("clientNotFoundOnUpdate", "Client not found!");
     }
 }

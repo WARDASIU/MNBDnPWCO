@@ -11,7 +11,6 @@
 <input type="button"  onclick="location.href='/movies'" value="Show movies">
 <input type="button"  onclick="location.href='/movies/rental'" value="Show movies rental">
 
-<!--<button onclick="getData()">Get Data</button>-->
 <button id="data">Get movies</button>
 
 <div id="data-list"></div>
@@ -38,20 +37,61 @@
 
 <div class="row" style="margin: 10px"></div>
 
-    <div id="deleteForm" class="container text-center col-lg-4" style="margin-top: 50px; border: 1px solid black;">
-        <form class="form-signin text-center" th:action="@{/admin/delete}" method="post">
-            <h1 class="h3 mb-3 font-weight-normal">Delete Client</h1>
-            <label for="nameToDelete" class="sr-only">Name</label>
-            <input type="text" name="nameToDelete" id="nameToDelete" class="form-control" placeholder="Name" required autofocus>
+<div id="deleteForm" class="container text-center col-lg-4" style="margin-top: 50px; border: 1px solid black;">
+    <form class="form-signin text-center" th:action="@{/admin/delete}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Delete Client</h1>
+        <label for="nameToDelete" class="sr-only">Name</label>
+        <input type="text" name="nameToDelete" id="nameToDelete" class="form-control" placeholder="Name" required autofocus>
 
-            <label for="surnameToDelete" class="sr-only">Password</label>
-            <input type="text" name="surnameToDelete" id="surnameToDelete" class="form-control" placeholder="Surname" required>
+        <label for="surnameToDelete" class="sr-only">Password</label>
+        <input type="text" name="surnameToDelete" id="surnameToDelete" class="form-control" placeholder="Surname" required>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Delete client</button>
-            <h3 th:if="${clientDeleted}" class="error">Client deleted!</h3>
-            <h3 th:if="${clientNotFound}" class="error">Client not found!</h3>
-        </form>
-    </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Delete client</button>
+        <h3 th:if="${clientDeleted}" class="error">Client deleted!</h3>
+        <h3 th:if="${clientNotFound}" class="error">Client not found!</h3>
+    </form>
+</div>
+
+<div class="row" style="margin: 10px"></div>
+
+<div id="updateMovieForm" class="container text-center col-lg-4" style="margin-top: 50px; border: 1px solid black;">
+    <button id="clientsDisplay" style="padding: 5px; margin: 10px">Display clients</button>
+    <form class="form-signin text-center" th:action="@{/admin/update}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Update Client</h1>
+        <label for="idToUpdate" class="sr-only">Give client id u want to update</label>
+        <input type="text" name="idToUpdate" id="idToUpdate" class="form-control" placeholder="Id" required autofocus>
+
+        <label for="nameToUpdate" class="sr-only">Name</label>
+        <input type="text" name="nameToUpdate" id="nameToUpdate" class="form-control" placeholder="Name" required autofocus>
+
+        <label for="surnameToUpdate" class="sr-only">Password</label>
+        <input type="text" name="surnameToUpdate" id="surnameToUpdate" class="form-control" placeholder="Surname" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Update client</button>
+        <h3 th:if="${clientCreatedOrUpdated}" class="error">Client updated!</h3>
+        <h3 th:if="${clientNotFoundOnUpdate}" class="error">Client not found!</h3>
+    </form>
+    <div id="data-list-clients"></div>
+</div>
+
+<div class="row" style="margin: 10px"></div>
+
+<div id="addMovie" class="container text-center col-lg-4" style="margin-top: 50px; border: 1px solid black;">
+    <form class="form-signin text-center" th:action="@{/admin/addMovie}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Delete Client</h1>
+        <label for="addMovie1" class="sr-only">Name</label>
+        <input type="text" name="movie1" id="addMovie1" class="form-control" placeholder="Name" required autofocus>
+
+        <label for="addMovie2" class="sr-only">Password</label>
+        <input type="text" name="movie2" id="addMovie2" class="form-control" placeholder="Surname" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Delete client</button>
+        <h3 th:if="${clientDeleted}" class="error">Client deleted!</h3>
+        <h3 th:if="${clientNotFound}" class="error">Client not found!</h3>
+    </form>
+</div>
+
+
 <script type="text/javascript" th:src="@{/fetchAdminPage.js}"></script>
 </body>
 </html>
