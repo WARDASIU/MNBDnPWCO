@@ -1,13 +1,12 @@
 package mongodb.project.Mnbd.controller;
 
-import mongodb.project.Mnbd.model.Movies;
+import com.google.gson.*;
 import mongodb.project.Mnbd.repositories.MoviesRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 
 @RestController
 public class MoviesController {
@@ -18,12 +17,14 @@ public class MoviesController {
     }
 
     @RequestMapping(value = "/movies", method = RequestMethod.GET)
-    public ModelAndView getProductsAsList() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("movies");
-        List<Movies> moviesList = moviesRepository.findAll();
-        mav.addObject("movies", moviesList);
+    public String getProductsAsList() {
+        Gson gson = new Gson();
 
-        return mav;
+        return gson.toJson(moviesRepository.findAll());
+    }
+
+    @RequestMapping(value = "/movies/repo", method = RequestMethod.GET)
+    public ResponseEntity<?> getUsers() {
+        return ResponseEntity.ok().body(moviesRepository.findAll());
     }
 }
