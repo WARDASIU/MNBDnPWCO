@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface MoviesRepository extends MongoRepository<Movies,String> {
     List<Movies> findAll();
+    Movies findBy_id(int id);
+
+    void deleteBy_id(int id);
 }

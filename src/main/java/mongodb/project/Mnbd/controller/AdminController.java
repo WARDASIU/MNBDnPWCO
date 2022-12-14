@@ -83,4 +83,14 @@ public class AdminController {
 
         return getAdminPage("movieAdded", "Movie added!");
     }
+
+    @PostMapping(value = "/deleteMovie")
+    public ModelAndView deleteMovie(String movieIdToDelete) {
+        if (moviesRepository.findBy_id(Integer.parseInt(movieIdToDelete)) != null) {
+            moviesRepository.deleteBy_id(Integer.parseInt(movieIdToDelete));
+
+            return getAdminPage("MovieDeleted", "Movie deleted!");
+        }
+        return getAdminPage("MovieNotFound", "Movie not found!");
+    }
 }

@@ -107,6 +107,20 @@
     </form>
 </div>
 
+<div class="row" style="margin: 10px"></div>
+
+<div id="deleteMovie" class="container text-center col-lg-4" style="margin-top: 50px; border: 1px solid black;">
+    <form class="form-signin text-center" th:action="@{/admin/deleteMovie}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Delete movie</h1>
+
+        <label for="movieToDelete" class="sr-only">Give movie's ID to delete</label>
+        <input type="number" name="movieIdToDelete" id="movieToDelete" class="form-control" placeholder="np. 2" required autofocus>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Delete movie</button>
+        <h3 th:if="${MovieDeleted}" class="error">Movie deleted!</h3>
+        <h3 th:if="${MovieNotFound}" class="error">Movie not found!</h3>
+    </form>
+</div>
 
 <script type="text/javascript" th:src="@{/fetchAdminPage.js}"></script>
 </body>

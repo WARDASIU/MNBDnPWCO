@@ -14,7 +14,7 @@ import java.util.Random;
 @Getter
 public class Movies {
     @Id
-    public long id;
+    public int _id;
 
     @Field("gatunek")
     public String category;
@@ -44,7 +44,7 @@ public class Movies {
                   final String title,
                   final List<String> actors,
                   final Integer releaseYear) {
-        this.id = new Random().nextInt(999999);
+        this._id = new Random().nextInt(999999);
         this.category = category;
         this.actors = actors;
         this.rating = rating;
