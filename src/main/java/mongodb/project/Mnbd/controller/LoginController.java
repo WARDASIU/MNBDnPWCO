@@ -19,15 +19,16 @@ public class LoginController {
     @PostMapping
     public ModelAndView login(String login, String password) {
         UserDetails user = userService.loadUserByUsername(login);
-
-        if (userService.verifyPassword(password, user)) {
-            ModelAndView successfulModel = new ModelAndView();
-            successfulModel.setViewName("redirect:/admin");
-            successfulModel.addObject("user", user);
-            return successfulModel;
-        } else {
-            return getLoginPage(true);
-        }
+        if (user != null) {
+            if (userService.verifyPassword(password, user)) {
+                ModelAndView successfulModel = new ModelAndView();
+                successfulModel.setViewName("redirect:/admin");
+                successfulModel.addObject("user", user);
+                return successfulModel;
+            } else {
+                return getLoginPage(true);
+            }
+        } else return getLoginPage(true);
     }
 
     @GetMapping
