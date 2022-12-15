@@ -1,0 +1,27 @@
+name: Selenium Tests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  selenium-tests:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start Spring application
+      run: ./mvnw spring-boot:run
+      env:
+        MAVEN_OPTS: "-Dspring.profiles.active=test"
+    - name: Run Selenium tests
+      uses: docker://selenium/standalone-chrome:3.141.59-20200525
+      env:
+        SELENIUM_HOST: localhost
+        SELENIUM_PORT: 4444
+        TEST_URL: http://localhost:8080
+        TEST_SUITE: /test-suite.xml
+    - name: Stop Spring application
+      run: ./mvnw spring-boot:stop
