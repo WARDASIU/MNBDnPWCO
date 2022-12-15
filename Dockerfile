@@ -1,8 +1,7 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:17
 
 EXPOSE 8080
 
-COPY ./build/libs/my-app-1.0-SNAPSHOT.jar /usr/app/
-WORKDIR /usr/app
+COPY ADD target/Mnbd-0.0.1-SNAPSHOT.jar Mnbd-0.0.1-SNAPSHOT.jar.original
 
-ENTRYPOINT ["java", "-jar", "my-app-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "Mnbd-0.0.1-SNAPSHOT.jar"]
