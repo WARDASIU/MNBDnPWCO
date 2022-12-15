@@ -1,35 +1,35 @@
 package mongodb.project.Mnbd.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import mongodb.project.Mnbd.repositories.MovieRentalRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.SneakyThrows;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 
-
-@AllArgsConstructor
 @Data
 @Document
 @Setter
 @Getter
 public class MovieRental {
-    @Autowired
-    private final MovieRentalRepository movieRentalRepository;
+    @Id
+    public ObjectId _id;
+    public Client client;
+    public String movieTitle;
+    public Date dateOfRental;
+    public Date plannedDateOfReturn;
 
-    @RequestMapping(value = "/movies/rental", method = RequestMethod.GET)
-    public ModelAndView getProductsAsList() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("movies");
-        List<Movies> moviesList = movieRentalRepository.findAll();
-        mav.addObject("movies", moviesList);
-
-        return mav;
+    @SneakyThrows
+    public MovieRental(final Client client, final String movieTitle, final String dateOfRental, final String plannedDateOfReturn) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        this.client = client;
+        this.movieTitle = movieTitle;
+        this.dateOfRental = inputFormat.parse(dateOfRental);
+        this.plannedDateOfReturn = inputFormat.parse(plannedDateOfReturn);
     }
 }

@@ -99,7 +99,7 @@
         <input type="text" name="addActors" id="addActors" class="form-control" placeholder="Actor1,Actor2" required>
 
         <label for="addYear" class="sr-only">Release Year</label>
-        <input type="number" name="addYear" id="addYear" class="form-control" placeholder="np. 2022" required>
+        <input type="number" name="addYear" id="addYear" class="form-control" placeholder="Release Year np. 2022" required>
 
 
         <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Add movie</button>
@@ -114,11 +114,31 @@
         <h1 class="h3 mb-3 font-weight-normal">Delete movie</h1>
 
         <label for="movieToDelete" class="sr-only">Give movie's ID to delete</label>
-        <input type="number" name="movieIdToDelete" id="movieToDelete" class="form-control" placeholder="np. 2" required autofocus>
+        <input type="number" name="movieIdToDelete" id="movieToDelete" class="form-control" placeholder="Movies ID to delete np. 2" required autofocus>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Delete movie</button>
         <h3 th:if="${MovieDeleted}" class="error">Movie deleted!</h3>
         <h3 th:if="${MovieNotFound}" class="error">Movie not found!</h3>
+    </form>
+</div>
+
+<div class="row" style="margin: 10px"></div>
+
+<div id="rentMovie" class="container text-center col-lg-4" style="margin-top: 50px; border: 1px solid black;">
+    <form class="form-signin text-center" th:action="@{/admin/rentMovie}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Rent a movie</h1>
+
+        <label for="clientsIdToRent" class="sr-only">Give client's ID to rent</label>
+        <input type="number" name="clientsIdToRent" id="clientsIdToRent" class="form-control" placeholder="Clients ID" required autofocus>
+
+
+        <label for="movieToRent" class="sr-only">Give movie's ID to rent</label>
+        <input type="number" name="movieToRent" id="movieToRent" class="form-control" placeholder="Movies ID" required autofocus>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 15px">Rent a movie</button>
+        <h3 th:if="${MovieRented}" class="error">Movie rented!</h3>
+        <h3 th:if="${MovieToRentNotFound}" class="error">Movie not found!</h3>
+        <h3 th:if="${ClientToRentNotFound}" class="error">Client not found!</h3>
     </form>
 </div>
 
